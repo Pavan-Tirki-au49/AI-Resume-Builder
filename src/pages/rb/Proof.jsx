@@ -63,7 +63,20 @@ const ProofPage = () => {
 
     // Helpers
     const isValidUrl = (string) => {
+        if (!string) return false;
         try { new URL(string); return true; } catch (_) { return false; }
+    };
+
+    const toggleStepStatus = (stepId) => {
+        const isComplete = stepStatus[stepId];
+        const newStatus = { ...stepStatus, [stepId]: !isComplete };
+        setStepStatus(newStatus);
+
+        if (!isComplete) {
+            localStorage.setItem(`rb_step_${stepId}_artifact`, 'manual_override');
+        } else {
+            localStorage.removeItem(`rb_step_${stepId}_artifact`);
+        }
     };
 
     const handleLinkChange = (e) => {
@@ -152,14 +165,18 @@ Core Capabilities:
                             </h2>
                             <div className="space-y-2">
                                 {STEPS.map(step => (
-                                    <div key={step.id} className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                                    <div
+                                        key={step.id}
+                                        onClick={() => toggleStepStatus(step.id)}
+                                        className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-color)] cursor-pointer hover:border-[var(--accent-primary)] transition-all group"
+                                    >
                                         <div className="flex items-center gap-3">
                                             <span className="text-xs font-mono text-[var(--text-secondary)]">{String(step.id).padStart(2, '0')}</span>
                                             <span className="text-sm font-medium">{step.name}</span>
                                         </div>
                                         {stepStatus[step.id] ?
                                             <CheckCircle className="text-[var(--success)]" size={18} /> :
-                                            <div className="w-4 h-4 rounded-full border-2 border-[var(--border-color)]" />
+                                            <div className="w-4 h-4 rounded-full border-2 border-[var(--border-color)] group-hover:border-[var(--accent-primary)]" />
                                         }
                                     </div>
                                 ))}
