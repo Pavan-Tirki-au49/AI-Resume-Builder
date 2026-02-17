@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-primary: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --accent-secondary: #ec4899;
+  --border-color: #334155;
+  --success: #10b981;
+  --error: #ef4444;
+  --nav-height: 64px;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+  }
+
+  /* Glassmorphism utility */
+  .glass {
+    @apply backdrop-blur-md border border-white/10 bg-slate-800/70;
+  }
+}
+
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Hide UI Elements */
+  nav,
+  header,
+  footer,
+  .no-print,
+  button,
+  .MuiFab-root,
+  .toast-container {
+    display: none !important;
+  }
+
+  /* Resume Paper Fixes */
+  .resume-paper {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    /* Ensure padding is kept for margins */
+    padding: 20mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    transform: none !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Ensure page breaks inside list items are avoided if possible */
+  li,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Force black text for print clarity */
+  .text-gray-500,
+  .text-gray-400,
+  .text-gray-600,
+  .text-gray-700,
+  .text-gray-800,
+  .text-gray-900 {
+    color: black !important;
+  }
+
+  /* Hide scrollbars */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
